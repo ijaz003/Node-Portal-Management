@@ -19,6 +19,30 @@ function showStudentSignInForm() {
   document.getElementById('signInForm').style.display = 'none';
   document.getElementById('studentSignInForm').style.display = 'block'; // Show student sign-in form
 }
+
+function showForgotPasswordForm(formType) {
+  // Hide other forms
+  document.getElementById('displayForm').style.display = 'none';
+  document.getElementById('signUpForm').style.display = 'none';
+  document.getElementById('signInForm').style.display = 'none';
+  document.getElementById('studentSignInForm').style.display = 'none';
+
+  // Show password recovery form
+  document.getElementById('passwordRecoveryForm').style.display = 'block';
+
+  // If the formType is 'signIn', pre-fill email from signInForm
+  if (formType === 'signIn') {
+    document.getElementById('recoveryEmail').value = document.getElementById('username1').value;
+  }
+
+  // If the formType is 'studentSignIn', pre-fill email from studentSignInForm
+  if (formType === 'studentSignIn') {
+    document.getElementById('recoveryEmail').value = document.getElementById('studentEmail').value;
+  }
+}
+
+
+
 // SignUP
 const signUp = async () => {
   const Name = document.getElementById("username").value;
@@ -102,4 +126,41 @@ const studentSignIn = async () => {
     alert("An error occurred. Please try again later.");
   }
 };
+
+
+// Assuming you're using fetch API
+const recoverPassword = async () => {
+  try {
+    const email = document.getElementById("recoveryEmail").value;
+    const oldPassword = document.getElementById("oldPassword").value;
+    const newPassword = document.getElementById("newPassword").value;
+
+    const response = await fetch(`http://localhost:${port}/forgotPassword`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          email: email,
+          password: oldPassword,
+          newPassword: newPassword
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok) {
+      
+      alert(data.message)
+    } else {
+      // Failed to update password
+      console.log(data.error)
+    }
+  } catch (error) {
+    alert(error)
+  }
+};
+
+
+
 

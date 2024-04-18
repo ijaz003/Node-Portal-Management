@@ -45,6 +45,7 @@
     </div>
     <div class="form-group">
       <button type="button" onclick="signIn()">Sign In</button>
+      <button type="button" onclick="showForgotPasswordForm('signIn')">Forgot Password</button>
     </div>
   </form>
 
@@ -62,6 +63,27 @@
     </div>
     <div class="form-group">
       <button type="button" onclick="studentSignIn()">Sign In</button>
+      <button type="button" onclick="showForgotPasswordForm('studentSignIn')">Forgot Password</button>
+    </div>
+  </form>
+
+  <!-- Password Recovery Form -->
+  <form id="passwordRecoveryForm" style="display: none;">
+    <h2>Password Recovery</h2>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="recoveryEmail" name="email" required>
+    </div>
+    <div class="form-group">
+      <label for="oldPassword">Old Password</label>
+      <input type="password" id="oldPassword" name="oldPassword" required>
+    </div>
+    <div class="form-group">
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" name="newPassword" required>
+    </div>
+    <div class="form-group">
+      <button type="button" onclick="recoverPassword()">Recover Password</button>
     </div>
   </form>
 </div>

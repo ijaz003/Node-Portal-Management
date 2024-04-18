@@ -6,7 +6,7 @@ const signinData = async (req, res) => {
     
     try {
         const dbData = await modelData.findOne({ userName });
-        
+         
         if (!dbData) {
             return res.status(404).send({error:"User not found"});
         }
