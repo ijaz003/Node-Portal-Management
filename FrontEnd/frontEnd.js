@@ -132,34 +132,29 @@ const studentSignIn = async () => {
 const recoverPassword = async () => {
   try {
     const email = document.getElementById("recoveryEmail").value;
-    const oldPassword = document.getElementById("oldPassword").value;
-    const newPassword = document.getElementById("newPassword").value;
 
-    const response = await fetch(`http://localhost:${port}/forgotPassword`, {
+    const response = await fetch(`http://localhost:${port}/forget`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
       },
       body: JSON.stringify({
           email: email,
-          password: oldPassword,
-          newPassword: newPassword
       })
     });
     
     const data = await response.json();
     
     if (response.ok) {
-      
-      alert(data.message)
+      alert(data.message);
     } else {
-      // Failed to update password
-      console.log(data.error)
+      alert(data.error || "Failed to reset password. Please try again."); // Display custom error message
     }
   } catch (error) {
-    alert(error)
+    alert("An error occurred. Please try again later."); // Display custom error message
   }
 };
+
 
 
 

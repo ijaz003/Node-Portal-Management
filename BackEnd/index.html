@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Reset</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .btn {
+            width: 100%;
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Password Reset</h2>
+        <form id="passwordResetForm">
+            <div class="form-group">
+                <label for="password">New Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+            </div>
+            <button type="button" class="btn" onclick="resetPassword()">Reset Password</button>
+        </form>
+    </div>
+
+    <script>
+        const parameter = new URLSearchParams(window.location.search);
+        const token = parameter.get('token');
+
+        function resetPassword() {
+    const Password = document.querySelector("#password").value;
+    const ConfirmPassword = document.querySelector("#confirmPassword").value;
+
+    fetch(`http://localhost:8000/newpassword`, {
+    method: 'POST', // Corrected method to 'POST'
+    headers: {
+        'Content-Type': 'application/json' // 'content-type' changed to 'Content-Type'
+    },
+    body: JSON.stringify({ // Stringify the body object
+        "password": Password, // Assuming Password is defined elsewhere
+        "confirmPassword": ConfirmPassword, // Assuming ConfirmPassword is defined elsewhere
+        "token": token // Assuming token is defined elsewhere
+    })
+})
+.then(response => {
+    if (response.ok) {
+        return response.json();
+    } else {
+        return response.json().then(data => {
+            throw new Error(data.error); // Handling error response
+        });
+    }
+})
+.then(data => {
+    alert(data.data); // Alerting data received from backend
+    console.log(data);
+})
+.catch(error => {
+    console.error('There was a problem with the fetch operation:', error);
+});
+        }
+
+    </script>
+</body>
+</html>
