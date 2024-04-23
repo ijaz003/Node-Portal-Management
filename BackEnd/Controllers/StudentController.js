@@ -26,7 +26,7 @@ const StudentData = async (req, res) => {
         const mailOptions = {
             from: {
                 name: "Ijaz Akbar",
-                address: "seebiz.bpt0623.evdev.6@gmail.com"
+                address
             },
             to: email,
             subject: "Send Mail using Nodemailer",
